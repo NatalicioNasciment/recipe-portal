@@ -11,3 +11,8 @@ def sobre(request):
 
 def contatos(request):
     return HttpResponse('Seção contatos')
+
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'name' : 'Natalicio Nascimento' 
+    })
