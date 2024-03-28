@@ -17,14 +17,9 @@ def category(request, category_id):
         'recipes' :  recipes
     })
 
-def sobre(request):
-    return HttpResponse('Seção sobre')
-
-def contatos(request):
-    return HttpResponse('Seção contatos')
-
 def recipe(request, id):
+    recipe = Recipe.objects.filter(id= id).first()
     return render(request, 'recipes/pages/recipe-view.html', context={
-        'recipe' : make_recipe(),
+        'recipe' : recipe,
         'is_detail_page' : True, 
     })
