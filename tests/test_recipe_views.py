@@ -19,3 +19,7 @@ class RecipeViewsTest(TestCase):
     def test_recipe_home_view_return_status_code_OK(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertEqual(response.status_code, 200 )
+    
+    def test_recipe_home_template_no_recipe_found_if_no_recipes(self):
+        response = self.client.get(reverse('recipes:home'))
+        self.assertIn( 'No recipes found',response.content.decode('utf-8'))
