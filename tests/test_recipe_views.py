@@ -3,11 +3,8 @@ from django.urls import reverse, resolve
 from recipes import views
 from recipes.models import Recipe
 from .test_recipe_base import RecipeTestBase
-    
-class RecipeViewsTest(RecipeTestBase):
 
-    def tearDown(self) -> None:
-        return super().tearDown()
+class RecipeViewsTest(RecipeTestBase):
 
     def test_recipe_home_view_is_correct(self):
         view = resolve(reverse('recipes:home'))
