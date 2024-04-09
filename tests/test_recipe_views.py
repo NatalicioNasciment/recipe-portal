@@ -27,6 +27,10 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn( 'No recipes found',response.content.decode('utf-8'))
 
     def test_recipe_home_template_loads_recipes(self):
+        self.make_recipe(author_data={
+            'first_name': 'fran'
+        })
+
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
         context_recipes = response.context['recipes']
@@ -34,6 +38,7 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('Recipe Title', content)
         self.assertIn('Recipe Description', content)
         self.assertIn('10  Minutos', content)
+        self.assertIn('fran', content)
         self.assertEqual(len(context_recipes), 1)
         
 
