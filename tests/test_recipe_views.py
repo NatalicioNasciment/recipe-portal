@@ -37,7 +37,14 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('10  Minutos', content)
         self.assertIn('fran', content)
         self.assertEqual(len(context_recipes), 1)
-        
+
+    def test_recipe_home_template_dont_loads_recipes_not_published(self):
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:home'))
+        content = response.content.decode('utf-8')
+
+        self.assertIn( 'No recipes found', content)
 
     def test_recipe_category_view_is_correct(self):
         view = resolve(reverse('recipes:category', kwargs={'category_id': 1}))
