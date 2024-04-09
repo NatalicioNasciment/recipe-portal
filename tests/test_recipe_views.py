@@ -46,6 +46,16 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipe_category_view_return_404_if_no_recipes_founds(self):
         response = self.client.get(reverse('recipes:category', kwargs={'category_id': 1000}))
         self.assertEqual(response.status_code, 404)
+    
+    def test_recipe_category_template_loads_recipes(self):
+        needed_title= 'This title is required'
+        self.make_recipe(title=needed_title)
+
+        response = self.client.get(reverse('recipes:category', args=(1,)))
+        content = response.content.decode('utf-8')
+        context_recipes = response.context['recipes']
+        
+        self.assertIn(needed_title, content)
 
     def test_recipe_detail_view_function_is_correct(self):
         view = resolve(reverse('recipes:recipes-recipe', kwargs={'id': 1}))
@@ -54,3 +64,12 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipe_detail_view_return_404_if_no_recipes_founds(self):
         response = self.client.get(reverse('recipes:recipes-recipe', kwargs={'id': 1000}))
         self.assertEqual(response.status_code, 404)
+
+    def test_recipe_detail_template_load_one_recipe(self):
+        needed_title= 'This title is required'
+        self.make_recipe(title=needed_title)
+
+        response = self.client.get(reverse('recipes:recipes-recipe', kwargs={'id': 1}))
+        content = response.content.decode('utf-8')
+        
+        self.assertIn(needed_title, content)
